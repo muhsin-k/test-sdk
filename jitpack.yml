@@ -2,11 +2,10 @@ jdk:
   - openjdk8
 
 before_install:
-  - wget https://services.gradle.org/distributions/gradle-8.0-bin.zip
-  - unzip -qq gradle-8.0-bin.zip
-  - export GRADLE_HOME=$PWD/gradle-8.0
+  - wget https://services.gradle.org/distributions/gradle-7.6.1-bin.zip
+  - unzip -qq gradle-7.6.1-bin.zip
+  - export GRADLE_HOME=$PWD/gradle-7.6.1
   - export PATH=$GRADLE_HOME/bin:$PATH
-  - gradle -v
-
-install:
-  - gradle clean build publishToMavenLocal
+  - mkdir -p $HOME/.android
+  - echo 'count=0' > $HOME/.android/repositories.cfg
+  - yes | sdkmanager "tools" "platform-tools" "build-tools;33.0.2" "platforms;android-34" "extras;android;m2repository" "extras;google;m2repository" 
