@@ -1,0 +1,11 @@
+jdk:
+  - openjdk11
+
+before_install:
+  - chmod +x gradlew
+  - ./gradlew wrapper --gradle-version=8.0
+  - yes | sdkmanager "platforms;android-34"
+
+install:
+  - ANDROID_PLUGIN_VERSION=$(cat build.gradle | grep -o "com.android.library[^\"]*")
+  - if [ -n "$ANDROID_PLUGIN_VERSION" ]; then ./gradlew clean build publishToMavenLocal; else ./gradlew -b build.gradle.kts clean build publishToMavenLocal; fi

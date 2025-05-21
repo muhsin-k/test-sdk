@@ -1,0 +1,4 @@
+#!/bin/bash
+# This is a placeholder to be replaced with the actual JAR file
+# Please run './gradlew wrapper' to properly generate this file
+echo "Please run './gradlew wrapper' to properly generate this file"
