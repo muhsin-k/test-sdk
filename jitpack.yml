@@ -2,9 +2,14 @@ jdk:
   - openjdk8
 
 before_install:
+  - wget https://services.gradle.org/distributions/gradle-6.5-bin.zip
+  - unzip -qq gradle-6.5-bin.zip
+  - export GRADLE_HOME=$PWD/gradle-6.5
+  - export PATH=$GRADLE_HOME/bin:$PATH
+  - gradle -v
   - mkdir -p $HOME/.android
   - echo 'count=0' > $HOME/.android/repositories.cfg
   - yes | sdkmanager "platforms;android-34"
 
 install:
-  - gradle -Pgroup=com.github.muhsin-k -Pversion=1.0.7 clean assembleRelease publishToMavenLocal
+  - gradle -Pgroup=com.github.muhsin-k -Pversion=1.0.9 clean assembleRelease publishToMavenLocal

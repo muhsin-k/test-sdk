@@ -82,7 +82,7 @@ afterEvaluate {
                 
                 groupId = "com.github.muhsin-k"
                 artifactId = "chatwoot-sdk"
-                version = "1.0.6"
+                version = "1.0.9"
             }
         }
     }

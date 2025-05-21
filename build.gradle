@@ -86,7 +86,7 @@ publishing {
         maven(MavenPublication) {
             groupId = project.findProperty('group') ?: 'com.github.muhsin-k'
             artifactId = 'chatwoot-sdk'
-            version = project.findProperty('version') ?: '1.0.8'
+            version = project.findProperty('version') ?: '1.0.9'
 
             artifact("$buildDir/outputs/aar/${project.name}-release.aar")
             artifact androidSourcesJar
