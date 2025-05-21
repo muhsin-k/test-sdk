@@ -62,7 +62,7 @@ afterEvaluate {
                 artifactId = "chatwoot-sdk"
                 version = project.findProperty("version") as String? ?: "1.0.12"
 
-                artifact("$buildDir/outputs/aar/chatwoot-sdk-release.aar")
+                artifact("$buildDir/outputs/aar/ChatwootSDK-release.aar")
                 artifact(tasks.named("androidSourcesJar"))
             }
         }
