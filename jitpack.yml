@@ -7,4 +7,4 @@ before_install:
   - yes | sdkmanager "platforms;android-34"
 
 install:
-  - gradle -Pgroup=com.github.muhsin-k -Pversion=1.0.7 clean assembleRelease publishToMavenLocal --debug
+  - gradle -Pgroup=com.github.muhsin-k -Pversion=1.0.7 clean assembleRelease publishToMavenLocal
