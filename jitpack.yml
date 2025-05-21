@@ -1,4 +1,11 @@
 jdk:
-  - openjdk11
+  - openjdk17
+
 before_install:
-  - ./scripts/prepareJitpackEnvironment.sh
+  - chmod +x ./gradlew
+
+install:
+  - ./gradlew clean publishToMavenLocal
+
+build:
+  - ./gradlew build

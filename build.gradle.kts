@@ -4,15 +4,15 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.4.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
+        classpath("com.android.tools.build:gradle:8.1.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
     }
 }
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-parcelize")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
     id("maven-publish")
 }
 
@@ -23,6 +23,7 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 34
+        
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -49,13 +50,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
 }
 
 dependencies {
@@ -73,23 +67,23 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
 
-// Configure maven publication
+// Publishing configuration
+tasks.register<Jar>("androidSourcesJar") {
+    archiveClassifier.set("sources")
+    from(android.sourceSets.getByName("main").java.srcDirs)
+}
+
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("release") {
-                from(components["release"])
-                
-                groupId = "com.github.muhsin-k"
+            create<MavenPublication>("maven") {
+                groupId = project.findProperty("group") as String? ?: "com.github.muhsin-k"
                 artifactId = "chatwoot-sdk"
-                version = "1.0.9"
+                version = project.findProperty("version") as String? ?: "1.0.12"
+
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+                artifact(tasks.named("androidSourcesJar"))
             }
         }
     }
-}
-
-// Make sure JitPack can find the proper repositories
-repositories {
-    google()
-    mavenCentral()
 }
