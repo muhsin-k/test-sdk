@@ -38,6 +38,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    tasks.withType<Jar> {
+        if (name.contains("releaseSourcesJar")) {
+            enabled = false
+        }
+    }
 }
 
 dependencies {
@@ -55,11 +61,6 @@ dependencies {
 }
 
 afterEvaluate {
-    val sourcesJar by tasks.registering(Jar::class) {
-        archiveClassifier.set("sources")
-        from(android.sourceSets.getByName("main").java.srcDirs)
-    }
-
     publishing {
         publications {
             create<MavenPublication>("maven") {
@@ -68,12 +69,7 @@ afterEvaluate {
                 version = project.findProperty("version") as String? ?: "1.0.12"
 
                 from(components["release"])
-                artifact(sourcesJar)
             }
         }
-    }
-
-    tasks.named("generateMetadataFileForMavenPublication") {
-        dependsOn(sourcesJar)
     }
 }
