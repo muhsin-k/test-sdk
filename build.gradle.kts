@@ -66,11 +66,11 @@ afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("maven") {
-                groupId = "com.github.muhsin-k"
+                groupId = project.findProperty("group") as String? ?: "com.github.muhsin-k"
                 artifactId = "chatwoot-sdk"
-                version = "1.0.15"
+                version = project.findProperty("version") as String? ?: "1.0.12"
 
-                from(components["release"])
+                artifact("$buildDir/outputs/aar/chatwoot-sdk-release.aar")
                 artifact(tasks.named("androidSourcesJar"))
 
                 pom {
