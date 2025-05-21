@@ -63,13 +63,13 @@ afterEvaluate {
                 version = project.findProperty("version") as String? ?: "1.0.12"
 
                 from(components["release"])
-                artifact(tasks.named("androidSourcesJar"))
+
+                val sourcesJar by tasks.registering(Jar::class) {
+                    archiveClassifier.set("sources")
+                    from(android.sourceSets.getByName("main").java.srcDirs)
+                }
+                artifact(sourcesJar)
             }
         }
     }
-}
-
-tasks.register("androidSourcesJar", Jar::class) {
-    archiveClassifier.set("sources")
-    from(android.sourceSets.getByName("main").java.srcDirs)
 }
