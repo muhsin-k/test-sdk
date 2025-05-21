@@ -7,7 +7,7 @@ Android SDK for Chatwoot
 Before building or publishing, please run:
 
 ```bash
-./gradlew wrapper --gradle-version 8.0
+./gradlew wrapper --gradle-version 6.5
 ```
 
 This will generate the required Gradle wrapper JAR file in the gradle/wrapper directory.
@@ -29,6 +29,6 @@ Add the dependency:
 
 ```kotlin
 dependencies {
-    implementation("com.github.muhsin-k:chatwoot-sdk:v1.0.9")
+    implementation("com.github.muhsin-k:chatwoot-sdk:v1.0.10")
 }
 ```
