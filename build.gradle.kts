@@ -55,6 +55,11 @@ dependencies {
 }
 
 afterEvaluate {
+    val sourcesJar by tasks.registering(Jar::class) {
+        archiveClassifier.set("sources")
+        from(android.sourceSets.getByName("main").java.srcDirs)
+    }
+
     publishing {
         publications {
             create<MavenPublication>("maven") {
@@ -63,13 +68,13 @@ afterEvaluate {
                 version = project.findProperty("version") as String? ?: "1.0.12"
 
                 from(components["release"])
-
-                val sourcesJar by tasks.registering(Jar::class) {
-                    archiveClassifier.set("sources")
-                    from(android.sourceSets.getByName("main").java.srcDirs)
-                }
                 artifact(sourcesJar)
             }
         }
     }
+
+    tasks.named("generateMetadataFileForMavenPublication") {
+        dependsOn(sourcesJar)
+    }
+}
 }
