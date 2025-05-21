@@ -4,7 +4,7 @@ jdk:
 before_install:
   - mkdir -p $HOME/.android
   - echo 'count=0' > $HOME/.android/repositories.cfg
-  - yes | sdkmanager "tools" "platform-tools" "build-tools;33.0.2" "platforms;android-34" "extras;android;m2repository" "extras;google;m2repository"
+  - yes | sdkmanager "platforms;android-34"
 
 install:
-  - gradle -Pgroup=com.github.muhsin-k -Pversion=1.0.5 clean build publishToMavenLocal
+  - gradle -Pgroup=com.github.muhsin-k -Pversion=1.0.7 clean assembleRelease publishToMavenLocal --debug
