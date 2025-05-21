@@ -77,4 +77,3 @@ afterEvaluate {
         dependsOn(sourcesJar)
     }
 }
-}
