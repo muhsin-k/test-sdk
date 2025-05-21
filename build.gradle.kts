@@ -10,9 +10,9 @@ buildscript {
 }
 
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.parcelize)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
     id("maven-publish")
 }
 
@@ -23,18 +23,14 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 34
-        
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
@@ -43,12 +39,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -61,29 +57,46 @@ dependencies {
     implementation("androidx.webkit:webkit:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("io.coil-kt:coil:2.5.0")
-
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-}
-
-// Publishing configuration
-tasks.register<Jar>("androidSourcesJar") {
-    archiveClassifier.set("sources")
-    from(android.sourceSets.getByName("main").java.srcDirs)
 }
 
 afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("maven") {
-                groupId = project.findProperty("group") as String? ?: "com.github.muhsin-k"
+                groupId = "com.github.muhsin-k"
                 artifactId = "chatwoot-sdk"
-                version = project.findProperty("version") as String? ?: "1.0.12"
+                version = "1.0.15"
 
-                artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+                from(components["release"])
                 artifact(tasks.named("androidSourcesJar"))
+
+                pom {
+                    name.set("Chatwoot SDK")
+                    description.set("Android SDK for Chatwoot")
+                    url.set("https://github.com/muhsin-k/chatwoot-sdk")
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://opensource.org/licenses/MIT")
+                        }
+                    }
+                    developers {
+                        developer {
+                            id.set("test")
+                            name.set("test")
+                            email.set("v@chatwoot.com")
+                        }
+                    }
+                }
             }
         }
     }
+}
+
+tasks.register("androidSourcesJar", Jar::class) {
+    archiveClassifier.set("sources")
+    from(android.sourceSets.getByName("main").java.srcDirs)
 }
