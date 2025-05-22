@@ -29,6 +29,6 @@ Add the dependency:
 
 ```kotlin
 dependencies {
-    implementation("com.github.muhsin-k:chatwoot-sdk:v1.0.11")
+    implementation("com.github.muhsin-k:test-sdk:1.0.25")
 }
 ```
