@@ -76,7 +76,7 @@ class ChatwootActivity : AppCompatActivity() {
 
     private fun setupSystemBars() {
         // Make content draw under system bars
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         
         // Set status bar and navigation bar colors
         window.statusBarColor = Color.TRANSPARENT
